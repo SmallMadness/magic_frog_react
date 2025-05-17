@@ -18,6 +18,9 @@ function Navigation() {
         <li>
           <Link to="/about" className="nav-link">Über</Link>
         </li>
+        <li>
+          <Link to="/admin" className="nav-link">Admin</Link>
+        </li>
       </ul>
     </nav>
   );

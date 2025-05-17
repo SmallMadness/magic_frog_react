@@ -1,0 +1,209 @@
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.magic-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 380px; /* Angepasste Höhe für alle Karten */
+  position: relative;
+}
+
+.magic-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.magic-card h3 {
+  font-size: 1.1rem;
+  margin: 0;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 40px; /* Reduzierte Höhe für den Titel */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #333;
+}
+
+.card-image-container {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f9fa;
+  height: 280px; /* Vergrößerte Höhe für den Bildcontainer */
+  overflow: hidden;
+}
+
+.card-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Behält das Seitenverhältnis bei */
+  border-radius: 4.2% / 3%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Kartenplatzhalter Stile */
+.card-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
+  border-radius: 4.2% / 3%;
+  border: 1px solid #ddd;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.card-placeholder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ddd;
+}
+
+.card-name-placeholder {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.card-mana-placeholder {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+.card-placeholder-type {
+  font-size: 0.8rem;
+  font-style: italic;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+}
+
+.card-placeholder-text {
+  font-size: 0.75rem;
+  line-height: 1.3;
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.card-placeholder-pt {
+  align-self: flex-end;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 2px 5px;
+  background-color: #eee;
+  border-radius: 3px;
+}
+
+.card-details {
+  padding: 1rem;
+  height: 280px; /* Gleiche Höhe wie der Bildcontainer */
+  overflow-y: auto; /* Scrollbar, wenn der Inhalt zu groß ist */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.card-details p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.card-details strong {
+  color: #555;
+}
+
+.card-text {
+  max-height: 100px;
+  overflow-y: auto;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin-top: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: center;
+  padding: 0.75rem;
+  border-top: 1px solid #e9ecef;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+}
+
+.card-actions button {
+  background-color: #4a67b7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.card-actions button:hover {
+  background-color: #3a539b;
+}
+
+/* Farben für Karten basierend auf Seltenheit */
+.rarity-common {
+  border-left: 4px solid #b0bec5;
+}
+
+.rarity-uncommon {
+  border-left: 4px solid #81c784;
+}
+
+.rarity-rare {
+  border-left: 4px solid #64b5f6;
+}
+
+.rarity-mythic {
+  border-left: 4px solid #e57373;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+  
+  .magic-card h3 {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .card-details p {
+    font-size: 0.8rem;
+  }
+}

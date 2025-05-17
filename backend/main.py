@@ -1,10 +1,15 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+
+# .env-Datei laden
+load_dotenv()
 import uvicorn
 
 from app.db.database import engine
 from app.models.models import Base
-from app.api import cards, sets
+from app.api import cards, sets, decks, sync
 
 # Datenbank-Tabellen erstellen
 Base.metadata.create_all(bind=engine)
@@ -19,7 +24,7 @@ app = FastAPI(
 # CORS-Middleware hinzufügen, um Cross-Origin-Anfragen zu erlauben
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # React-App URL
+    allow_origins=os.getenv("CORS_ORIGINS", "http://localhost:3000").split(","),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -28,6 +33,8 @@ app.add_middleware(
 # API-Routen einbinden
 app.include_router(cards.router)
 app.include_router(sets.router)
+app.include_router(decks.router)
+app.include_router(sync.router)
 
 @app.get("/")
 def read_root():
@@ -35,4 +42,8 @@ def read_root():
 
 # Server starten, wenn Skript direkt ausgeführt wird
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    host = os.getenv("API_HOST", "0.0.0.0")
+    port = int(os.getenv("API_PORT", "8000"))
+    debug = os.getenv("API_DEBUG", "true").lower() == "true"
+    
+    uvicorn.run("main:app", host=host, port=port, reload=debug)

@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
+import './styles/DeckBuilder.css';
+import './styles/Cards.css';
+import './styles/HomePage.css';
 
-// Importiere Komponenten
 import Navigation from './components/Navigation';
-
-// Importiere Seiten
 import HomePage from './pages/HomePage';
 import DeckBuilderPage from './pages/DeckBuilderPage';
 import AboutPage from './pages/AboutPage';
-
-// Importiere Daten
-import exampleCards from './data/cardData';
+import AdminPage from './pages/AdminPage';
+import { cardsApi } from './services/api';
 
 function App() {
   // State für die Suche und Filter
@@ -22,60 +21,77 @@ function App() {
     set: '',
     manaCost: ''
   });
-  const [filteredCards, setFilteredCards] = useState(exampleCards);
-  
+  const [allCards, setAllCards] = useState([]);
+  const [filteredCards, setFilteredCards] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Karten aus der API laden
+  useEffect(() => {
+    const fetchCards = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const cardsData = await cardsApi.getCards();
+        setAllCards(cardsData);
+        setFilteredCards(cardsData);
+      } catch (error) {
+        console.error('Fehler beim Laden der Karten:', error);
+        setError('Fehler beim Laden der Karten. Bitte versuche es später erneut.');
+        setAllCards([]);
+        setFilteredCards([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCards();
+  }, []);
+
   // Effekt zum Filtern der Karten bei Änderungen an Suche oder Filtern
   useEffect(() => {
-    let result = exampleCards;
-    
+    if (!allCards.length) return;
+
+    let result = [...allCards];
+
     // Filtern nach Suchbegriff
     if (searchTerm) {
-      result = result.filter(card => 
+      result = result.filter(card =>
         card.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    
+
     // Filtern nach Kartentyp
     if (filters.type) {
-      result = result.filter(card => 
-        card.type.includes(filters.type)
+      result = result.filter(card =>
+        card.type.toLowerCase().includes(filters.type.toLowerCase())
       );
     }
-    
+
     // Filtern nach Seltenheit
     if (filters.rarity) {
-      result = result.filter(card => 
-        card.rarity === filters.rarity
+      result = result.filter(card =>
+        card.rarity.toLowerCase() === filters.rarity.toLowerCase()
       );
     }
-    
+
     // Filtern nach Set
     if (filters.set) {
-      result = result.filter(card => 
-        card.set === filters.set
+      result = result.filter(card =>
+        card.set_code.toLowerCase() === filters.set.toLowerCase()
       );
     }
-    
-    // Filtern nach Manakosten (vereinfacht)
+
+    // Filtern nach Manakosten
     if (filters.manaCost) {
-      const cost = parseInt(filters.manaCost);
-      if (cost === 5) {
-        // 5+ Mana
-        result = result.filter(card => {
-          const manaCost = card.manaCost.match(/\d+/) ? parseInt(card.manaCost.match(/\d+/)[0]) : 0;
-          return manaCost >= 5;
-        });
-      } else {
-        // Exakter Manawert
-        result = result.filter(card => {
-          const manaCost = card.manaCost.match(/\d+/) ? parseInt(card.manaCost.match(/\d+/)[0]) : 0;
-          return manaCost === cost;
-        });
-      }
+      result = result.filter(card =>
+        card.mana_cost && card.mana_cost.includes(filters.manaCost)
+      );
     }
     
     setFilteredCards(result);
-  }, [searchTerm, filters]); // Abhängigkeiten für den Effekt
+  }, [searchTerm, filters, allCards]);
   
   // Handler für Änderungen in der Suchleiste
   const handleSearchChange = (value) => {
@@ -105,8 +121,8 @@ function App() {
     <Router>
       <div className="App">
         <header className="App-header">
-          <h1>Magic: The Gathering Deck Builder</h1>
-          <p>Erstelle und verwalte deine Magic-Decks</p>
+          <h1>Magic Frog</h1>
+          <p>Dein Magic: The Gathering Deck Builder</p>
           <Navigation />
         </header>
         <main className="App-main">
@@ -118,10 +134,13 @@ function App() {
                 filters={filters}
                 onFilterChange={handleFilterChange}
                 filteredCards={filteredCards}
+                loading={loading}
+                error={error}
               />
             } />
             <Route path="/deck-builder" element={<DeckBuilderPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/admin" element={<AdminPage />} />
           </Routes>
         </main>
         <footer className="App-footer">

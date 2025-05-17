@@ -1,5 +1,6 @@
-from typing import List, Optional
+from typing import List, Optional, Dict
 from pydantic import BaseModel
+from datetime import datetime
 
 class ColorBase(BaseModel):
     code: str
@@ -40,3 +41,66 @@ class Card(CardBase):
 
     class Config:
         orm_mode = True
+
+
+class DeckCardBase(BaseModel):
+    card_id: str
+    quantity: int = 1
+    is_sideboard: bool = False
+
+
+class DeckCardCreate(DeckCardBase):
+    pass
+
+
+class DeckCard(DeckCardBase):
+    id: int
+    deck_id: int
+    card: Optional[Card] = None
+
+    class Config:
+        orm_mode = True
+
+
+class DeckBase(BaseModel):
+    name: str
+    description: Optional[str] = None
+    format: str = "Standard"
+
+
+class DeckCreate(DeckBase):
+    cards: List[DeckCardCreate] = []
+
+
+class DeckUpdate(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    format: Optional[str] = None
+    cards: Optional[List[DeckCardCreate]] = None
+
+
+class Deck(DeckBase):
+    id: int
+    created_at: datetime
+    updated_at: datetime
+    deck_cards: List[DeckCard] = []
+
+    class Config:
+        orm_mode = True
+
+
+class DeckWithCards(Deck):
+    # Hilfsmethode zum Gruppieren von Karten in Hauptdeck und Sideboard
+    @property
+    def main_deck(self) -> List[Dict]:
+        return [{
+            "card": card.card,
+            "quantity": card.quantity
+        } for card in self.deck_cards if not card.is_sideboard]
+
+    @property
+    def sideboard(self) -> List[Dict]:
+        return [{
+            "card": card.card,
+            "quantity": card.quantity
+        } for card in self.deck_cards if card.is_sideboard]

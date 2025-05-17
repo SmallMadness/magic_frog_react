@@ -1,7 +1,18 @@
+# API und Web Server
 fastapi==0.103.1
 uvicorn==0.23.2
-sqlalchemy==2.0.20
-psycopg2-binary==2.9.7
 pydantic==2.3.0
+
+# Datenbank
+sqlalchemy==2.0.20
+# psycopg2-binary==2.9.7  # PostgreSQL-Treiber (auskommentiert, da wir SQLite verwenden)
+
+# HTTP-Anfragen
 requests==2.31.0
+
+# Umgebungsvariablen
 python-dotenv==1.0.0
+
+# Testing
+pytest==7.4.0
+httpx==0.24.1
