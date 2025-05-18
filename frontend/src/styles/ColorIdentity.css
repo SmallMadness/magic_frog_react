@@ -1,0 +1,81 @@
+.color-identity-container {
+  width: 100%;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.color-identity-title {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.color-identity-symbols {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.color-identity-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.color-identity-count {
+  margin-top: 5px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.color-identity-percentage {
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: normal;
+}
+
+.color-identity-bars {
+  display: flex;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.color-identity-bar {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Farben für die Balken */
+.color-w {
+  background-color: #f8f6d8; /* Weiß */
+}
+
+.color-u {
+  background-color: #c1d7e9; /* Blau */
+}
+
+.color-b {
+  background-color: #756a66; /* Schwarz */
+}
+
+.color-r {
+  background-color: #e49977; /* Rot */
+}
+
+.color-g {
+  background-color: #a3c095; /* Grün */
+}
+
+.color-c {
+  background-color: #ccc; /* Farblos */
+}

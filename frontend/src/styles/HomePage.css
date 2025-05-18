@@ -3,52 +3,173 @@
 .home-page-container {
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-/* Suchbereich und Filter */
-.search-filter-container {
+  min-height: 100vh;
   background-color: #f8f9fa;
+}
+
+/* Hero-Bereich mit Gradient-Hintergrund */
+.hero-section {
+  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+  color: white;
+  padding: 0.75rem 2rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="rgba(255,255,255,0.05)" d="M50 0 L100 50 L50 100 L0 50 Z"/></svg>');
+  background-size: 100px 100px;
+  opacity: 0.3;
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 60px;
+}
+
+.hero-text {
+  flex: 0 0 auto;
+  text-align: left;
+  margin-right: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-section h1 {
+  font-size: 1.8rem;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+  white-space: nowrap;
+}
+
+.subtitle {
+  font-size: 0.8rem;
+  margin: 0;
+  opacity: 0.8;
+  position: relative;
+  line-height: 1.2;
+}
+
+.main-search-container {
+  flex: 1 1 auto;
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+}
+
+/* Content-Bereich mit Filter und Karten */
+.content-area {
+  display: flex;
+  flex: 1;
+  padding: 2.5rem;
+  gap: 2rem;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Filterbereich */
+.filter-sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  background-color: white;
   border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
 }
 
-.search-section {
-  margin-bottom: 20px;
-}
-
-.search-section h2 {
+.filter-sidebar h2 {
   margin-top: 0;
-  margin-bottom: 15px;
+  margin-bottom: 0.8rem;
+  font-size: 1.2rem;
   color: #333;
-  font-size: 1.5rem;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 8px;
 }
 
-/* Kartenanzeige */
-.card-display {
-  background-color: #ffffff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+/* Kartenanzeigebereich */
+.card-display-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .card-display-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  background-color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin-bottom: 25px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 2px solid #f0f0f0;
 }
 
-.card-display-header h3 {
+.card-display-header h2 {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: #333;
+}
+
+.sort-options {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sort-select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #f8f9fa;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/* No Results Message */
+.no-results {
+  text-align: center;
+  padding: 40px 0;
+  color: #666;
+}
+
+.no-results p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .content-area {
+    grid-template-columns: 1fr;
+  }
+  
+  .hero-section {
+    padding: 40px 20px;
+  }
+  
+  .hero-section h1 {
+    font-size: 2rem;
+  }
 }
 
 .card-sort-options {

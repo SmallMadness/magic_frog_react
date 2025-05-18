@@ -1,0 +1,143 @@
+/* FilterPanel Styles */
+
+.filter-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  width: 180px; /* Feste Breite für schmales Panel */
+}
+
+.filter-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.filter-group label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 2px;
+}
+
+.select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.filter-select {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: white;
+  font-size: 0.85rem;
+  color: #333;
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #2196f3;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+.select-arrow {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  pointer-events: none;
+}
+
+.reset-filters-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  color: #666;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.reset-filters-button.active {
+  background-color: #e53935;
+  color: white;
+}
+
+.reset-filters-button.active:hover {
+  background-color: #e57373;
+}
+
+.reset-filters-button.inactive {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.reset-filters-button:hover:not(:disabled) {
+  background-color: #d32f2f;
+  color: white;
+}
+
+/* Styles für Mana-Symbole */
+.mana-option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Kompaktes Layout für mobile Geräte */
+@media (max-width: 768px) {
+  .filter-groups {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .filter-group {
+    max-width: none;
+  }
+}
+
+.reset-filters-button svg {
+  transition: transform 0.3s ease;
+}
+
+.reset-filters-button:hover:not(:disabled) svg {
+  transform: rotate(-45deg);
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .filter-groups {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .filter-groups {
+    grid-template-columns: 1fr;
+  }
+}

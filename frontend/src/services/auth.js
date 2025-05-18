@@ -136,6 +136,96 @@ const authService = {
     }
   },
 
+  // Profil aktualisieren
+  updateProfile: async (userData) => {
+    try {
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        throw new Error('Nicht autorisiert');
+      }
+
+      const response = await fetch(`${API_BASE_URL}/users/me`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Aktualisierung fehlgeschlagen');
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Fehler beim Aktualisieren des Profils:', error);
+      throw error;
+    }
+  },
+
+  // Passwort ändern
+  changePassword: async (passwordData) => {
+    try {
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        throw new Error('Nicht autorisiert');
+      }
+
+      const response = await fetch(`${API_BASE_URL}/users/me/password`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(passwordData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Passwortänderung fehlgeschlagen');
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Fehler beim Ändern des Passworts:', error);
+      throw error;
+    }
+  },
+
+  // Konto löschen
+  deleteAccount: async () => {
+    try {
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        throw new Error('Nicht autorisiert');
+      }
+
+      const response = await fetch(`${API_BASE_URL}/users/me`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Kontolöschung fehlgeschlagen');
+      }
+
+      // Nach erfolgreicher Löschung abmelden
+      authService.logout();
+      return true;
+    } catch (error) {
+      console.error('Fehler beim Löschen des Kontos:', error);
+      throw error;
+    }
+  },
+
   // Benutzer abrufen (nur für Administratoren)
   getUsers: async () => {
     try {

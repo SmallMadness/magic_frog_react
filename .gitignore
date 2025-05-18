@@ -84,3 +84,38 @@ backend/cache/
 .history
 .vercel
 .netlify
+
+# Backup files
+*.css.bak
+*.js.bak
+
+# Generated files
+.eslintcache
+.stylelintcache
+
+# Coverage directory
+.nyc_output
+
+# Dependency directories
+.npm
+.yarn
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Yarn Integrity file
+.yarn-integrity
+
+# Deployment files
+.firebase/
+.firebaserc
+firebase-debug.log
+
+# Scryfall API data
+scryfall_data/

@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import './styles/DeckBuilder.css';
-import './styles/Cards.css';
+import './styles/MagicCardKanban.css';
+import './styles/CardKanbanBoard.css';
 import './styles/HomePage.css';
 import './styles/Loading.css';
 import './styles/Auth.css';
 import './styles/Admin.css';
+import './styles/Navigation.css';
 
 import Navigation from './components/Navigation';
 import HomePage from './pages/HomePage';
@@ -15,6 +17,8 @@ import AboutPage from './pages/AboutPage';
 import AdminPage from './pages/AdminPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import ProfilePage from './pages/ProfilePage';
+import CardDetailView from './components/cards/CardDetailView';
 import ProtectedRoute from './components/ProtectedRoute';
 import { cardsApi } from './services/api';
 import authService from './services/auth';
@@ -34,8 +38,8 @@ function App() {
   const [error, setError] = useState(null);
   
   // Auth State
-  const [user, setUser] = useState(null);
-  const [authChecked, setAuthChecked] = useState(false);
+  const [, setUser] = useState(null);
+  const [, setAuthChecked] = useState(false);
 
   // Karten aus der API laden
   useEffect(() => {
@@ -152,11 +156,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <header className="App-header">
-          <h1>Magic Frog</h1>
-          <p>Dein Magic: The Gathering Deck Builder</p>
-          <Navigation />
-        </header>
+        <Navigation />
         <main className="App-main">
           <Routes>
             <Route path="/" element={
@@ -183,6 +183,12 @@ function App() {
             } />
             <Route path="/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            } />
+            <Route path="/card/:cardId" element={<CardDetailView />} />
           </Routes>
         </main>
         <footer className="App-footer">

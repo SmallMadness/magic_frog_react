@@ -6,6 +6,8 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  margin: 0;
+  padding: 0;
 }
 
 .App-header {
@@ -101,7 +103,7 @@
 .App-main {
   flex: 1;
   padding: 2rem;
-  max-width: 1200px;
+  max-width: 1900px;
   margin: 0 auto;
   width: 100%;
 }

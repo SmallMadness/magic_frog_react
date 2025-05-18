@@ -1,0 +1,76 @@
+.mana-curve-container {
+  width: 100%;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.mana-curve-title {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.mana-curve {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 150px;
+  padding-bottom: 30px;
+  position: relative;
+}
+
+.mana-curve-bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 12%;
+  height: 100%;
+}
+
+.mana-curve-bar {
+  width: 100%;
+  background-color: #1976d2;
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 5px;
+  min-height: 20px;
+  transition: height 0.3s ease;
+}
+
+.mana-curve-count {
+  color: white;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.mana-curve-label {
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mana-symbol-container {
+  display: flex;
+  align-items: center;
+}
+
+.mana-symbol-container span {
+  margin-left: 2px;
+  font-size: 0.9rem;
+}
+
+/* Farbverlauf für die Balken basierend auf den Manakosten */
+.mana-curve-bar-container:nth-child(1) .mana-curve-bar { background-color: #AAAAAA; } /* 0 */
+.mana-curve-bar-container:nth-child(2) .mana-curve-bar { background-color: #3498db; } /* 1 */
+.mana-curve-bar-container:nth-child(3) .mana-curve-bar { background-color: #2ecc71; } /* 2 */
+.mana-curve-bar-container:nth-child(4) .mana-curve-bar { background-color: #f1c40f; } /* 3 */
+.mana-curve-bar-container:nth-child(5) .mana-curve-bar { background-color: #e67e22; } /* 4 */
+.mana-curve-bar-container:nth-child(6) .mana-curve-bar { background-color: #e74c3c; } /* 5 */
+.mana-curve-bar-container:nth-child(7) .mana-curve-bar { background-color: #9b59b6; } /* 6 */
+.mana-curve-bar-container:nth-child(8) .mana-curve-bar { background-color: #8e44ad; } /* 7+ */

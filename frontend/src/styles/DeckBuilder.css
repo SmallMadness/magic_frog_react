@@ -440,8 +440,9 @@
 }
 
 .tab-button.active {
-  background-color: #4a67b7;
-  color: white;
+  background-color: transparent;
+  color: #000000;
+  border-bottom: 3px solid #3b82f6;
 }
 
 .deck-cards-container {

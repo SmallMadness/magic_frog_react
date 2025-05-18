@@ -1,0 +1,194 @@
+/* MagicCardList Styles - Moderne Listenansicht für Magic-Karten */
+
+.magic-card-list {
+  width: 100%;
+  overflow-x: auto;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.magic-card-list table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.magic-card-list thead {
+  background-color: #f5f5f5;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.magic-card-list th {
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+  position: relative;
+}
+
+/* Sortierbare Spaltenüberschriften */
+.magic-card-list th.sortable {
+  cursor: pointer;
+  user-select: none;
+  padding-right: 25px; /* Platz für den Sortierindikator */
+}
+
+.magic-card-list th.sortable:hover {
+  background-color: #f0f0f0;
+}
+
+/* Sortierindikator */
+.sort-indicator {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+}
+
+/* Aufsteigender Sortierindikator */
+.magic-card-list th.ascending .sort-indicator::after {
+  content: '\25B2'; /* Nach oben zeigendes Dreieck */
+  font-size: 0.7rem;
+  color: #3498db;
+}
+
+/* Absteigender Sortierindikator */
+.magic-card-list th.descending .sort-indicator::after {
+  content: '\25BC'; /* Nach unten zeigendes Dreieck */
+  font-size: 0.7rem;
+  color: #3498db;
+}
+
+.magic-card-list tbody tr {
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+  border-left: 0; /* Stelle sicher, dass kein Standard-Border vorhanden ist */
+}
+
+.magic-card-list tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.magic-card-list td {
+  padding: 10px 15px;
+  vertical-align: middle;
+  text-align: left;
+}
+
+.card-name-container {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  padding-left: 4px;
+}
+
+.card-name {
+  color: #333;
+  font-weight: 500;
+}
+
+/* Stil für die Tabellenzeilen mit farbigem linken Rand */
+.card-list-row {
+  border-left-width: 4px !important;
+  border-left-style: solid !important;
+  transition: background-color 0.2s;
+}
+
+/* Spaltenbreiten */
+.name-column {
+  width: 25%;
+}
+
+.type-column {
+  width: 20%;
+}
+
+.mana-column {
+  width: 15%;
+  white-space: nowrap;
+}
+
+.set-column {
+  width: 15%;
+}
+
+.rarity-column {
+  width: 10%;
+}
+
+.actions-column {
+  width: 15%;
+  text-align: left;
+}
+
+/* Buttons */
+.action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.btn-add-list {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background-color: #4caf50;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-right: 12px;
+}
+
+.btn-add-list:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.btn-details {
+  padding: 5px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 4px;
+  background-color: #3498db;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-details:hover {
+  background-color: #2980b9;
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 768px) {
+  .magic-card-list {
+    font-size: 0.8rem;
+  }
+  
+  .magic-card-list th,
+  .magic-card-list td {
+    padding: 8px 10px;
+  }
+  
+  .set-column,
+  .rarity-column {
+    display: none;
+  }
+}

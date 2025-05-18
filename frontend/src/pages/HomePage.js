@@ -1,8 +1,9 @@
-import React from 'react';
-import SearchBar from '../components/search/SearchBar';
+import React, { useState } from 'react';
 import FilterPanel from '../components/filters/FilterPanel';
-import CardGrid from '../components/cards/CardGrid';
+import CardKanbanBoard from '../components/cards/CardKanbanBoard';
 import { Loading, ErrorMessage } from '../components/common/Loading';
+import HeroSection from '../components/ui/HeroSection';
+import '../styles/HomePage.css';
 
 /**
  * Homepage-Komponente, die die Kartensammlung anzeigt
@@ -25,58 +26,52 @@ function HomePage({
   loading,
   error
 }) {
+  const [sortOrder, setSortOrder] = useState('name');
+
+  // Handler für Änderungen an der Sortierung
+  const handleSortChange = (newSortOrder) => {
+    setSortOrder(newSortOrder);
+    // Hier könnte die Sortierlogik implementiert werden
+  };
+
   return (
     <div className="home-page-container">
-      <div className="search-filter-container">
-        <div className="search-section">
-          <h2>Magic Kartensammlung</h2>
-          {/* Suchleiste */}
-          <SearchBar 
-            searchTerm={searchTerm} 
-            onSearchChange={onSearchChange} 
-            placeholder="Kartenname, Text oder Typ suchen..."
+      {/* Hero-Sektion mit Titel und Suchleiste */}
+      <HeroSection 
+        searchTerm={searchTerm} 
+        onSearchChange={onSearchChange} 
+      />
+
+      <div className="content-area">
+        <aside className="filter-sidebar">
+          <h2>Filter</h2>
+          <FilterPanel 
+            filters={filters} 
+            onFilterChange={onFilterChange} 
           />
-        </div>
+        </aside>
         
-        {/* Filterpanel */}
-        <FilterPanel 
-          filters={filters} 
-          onFilterChange={onFilterChange} 
-        />
-      </div>
-      
-      <section className="card-display">
-        {loading ? (
-          <Loading message="Lade Karten..." />
-        ) : error ? (
-          <ErrorMessage message={error} />
-        ) : (
-          <>
-            <div className="card-display-header">
-              <h3>Gefundene Karten: {filteredCards.length}</h3>
-              {filteredCards.length > 0 && (
-                <div className="card-sort-options">
-                  <label htmlFor="sortOrder">Sortieren nach:</label>
-                  <select id="sortOrder" className="sort-select">
-                    <option value="name">Name</option>
-                    <option value="cmc">Manawert</option>
-                    <option value="rarity">Seltenheit</option>
-                    <option value="type">Kartentyp</option>
-                  </select>
+        <main className="card-display-area">
+          {loading ? (
+            <Loading message="Lade Karten..." />
+          ) : error ? (
+            <ErrorMessage message={error} />
+          ) : (
+            <>
+              {filteredCards.length > 0 ? (
+                <CardKanbanBoard 
+                  cards={filteredCards} 
+                  onAddCardToDeck={(card) => console.log('Karte zum Deck hinzufügen:', card)}
+                />
+              ) : (
+                <div className="no-results">
+                  <p>Keine Karten gefunden. Versuche andere Suchkriterien.</p>
                 </div>
               )}
-            </div>
-            
-            {filteredCards.length === 0 ? (
-              <div className="no-cards-message">
-                <p>Keine Karten gefunden. Versuche andere Suchkriterien oder Filter.</p>
-              </div>
-            ) : (
-              <CardGrid cards={filteredCards} />
-            )}
-          </>
-        )}
-      </section>
+            </>
+          )}
+        </main>
+      </div>
     </div>
   );
 }

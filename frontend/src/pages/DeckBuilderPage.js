@@ -14,7 +14,7 @@ function DeckBuilderPage() {
   const [selectedDeck, setSelectedDeck] = useState(null);
   const [isCreatingDeck, setIsCreatingDeck] = useState(false);
   const [availableCards, setAvailableCards] = useState([]);
-  const [selectedCard, setSelectedCard] = useState(null);
+  // const [selectedCard, setSelectedCard] = useState(null); // Auskommentiert, da aktuell nicht verwendet
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   
@@ -142,12 +142,14 @@ function DeckBuilderPage() {
     }
   };
   
-  // Anzahl der Karten im Deck zählen
+  // Anzahl der Karten im Deck zählen (aktuell nicht verwendet)
+  /*
   const countCards = (deck) => {
     const mainDeckCount = deck.mainDeck.reduce((total, item) => total + item.quantity, 0);
     const sideboardCount = deck.sideboard.reduce((total, item) => total + item.quantity, 0);
     return mainDeckCount + sideboardCount;
   };
+  */
   
   // Bearbeitung abbrechen
   const handleCancelEdit = () => {
