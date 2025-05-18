@@ -50,6 +50,54 @@
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Auth Navigation Styles */
+.auth-nav-item {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.user-greeting {
+  color: white;
+  margin-right: 1rem;
+  font-weight: 500;
+}
+
+.logout-button {
+  background: none;
+  border: 1px solid white;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.logout-button:hover {
+  background-color: white;
+  color: #2c3e50;
+}
+
+.register-link {
+  background-color: #2ecc71;
+  margin-left: 0.5rem;
+}
+
+.register-link:hover {
+  background-color: #27ae60;
+}
+
+/* Success Message */
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  text-align: center;
+}
+
 .App-main {
   flex: 1;
   padding: 2rem;

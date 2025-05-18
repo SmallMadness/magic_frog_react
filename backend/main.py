@@ -2,17 +2,30 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
+from fastapi.security import OAuth2PasswordBearer
+import logging
 
 # .env-Datei laden
 load_dotenv()
 import uvicorn
 
-from app.db.database import engine
-from app.models.models import Base
-from app.api import cards, sets, decks, sync
+from app.db.database import engine, SessionLocal
+from app.models.models import Base, User, UserRole
+from app.api import cards, sets, decks, sync, users
+from app.scripts.create_admin import create_admin_user
 
 # Datenbank-Tabellen erstellen
 Base.metadata.create_all(bind=engine)
+
+# Admin-Benutzer erstellen, wenn noch keiner existiert
+try:
+    admin_created = create_admin_user()
+    if admin_created:
+        print("Admin-Benutzer wurde erstellt. Benutzername: admin, Passwort: admin")
+    else:
+        print("Admin-Benutzer existiert bereits.")
+except Exception as e:
+    print(f"Fehler beim Erstellen des Admin-Benutzers: {e}")
 
 # FastAPI-App initialisieren
 app = FastAPI(
@@ -35,6 +48,7 @@ app.include_router(cards.router)
 app.include_router(sets.router)
 app.include_router(decks.router)
 app.include_router(sync.router)
+app.include_router(users.router)
 
 @app.get("/")
 def read_root():

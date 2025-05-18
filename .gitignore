@@ -21,7 +21,11 @@ backend/dist
 *.sqlite3
 backend/database.db
 backend/db.sqlite3
+backend/magic_cards.db
 /postgres-data
+
+# Sync status files
+backend/last_sync.txt
 
 # Environment variables
 .env
@@ -55,7 +59,10 @@ env/
 venv/
 ENV/
 .venv/
+backend/venv/
 .pytest_cache/
+pip-log.txt
+pip-delete-this-directory.txt
 
 # OS specific
 .DS_Store
@@ -68,3 +75,12 @@ Thumbs.db
 # Scryfall API cache
 backend/cache/
 /cache
+
+# JWT Secret Keys
+*.pem
+*.key
+
+# Local development files
+.history
+.vercel
+.netlify

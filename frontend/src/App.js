@@ -4,13 +4,20 @@ import './App.css';
 import './styles/DeckBuilder.css';
 import './styles/Cards.css';
 import './styles/HomePage.css';
+import './styles/Loading.css';
+import './styles/Auth.css';
+import './styles/Admin.css';
 
 import Navigation from './components/Navigation';
 import HomePage from './pages/HomePage';
 import DeckBuilderPage from './pages/DeckBuilderPage';
 import AboutPage from './pages/AboutPage';
 import AdminPage from './pages/AdminPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import ProtectedRoute from './components/ProtectedRoute';
 import { cardsApi } from './services/api';
+import authService from './services/auth';
 
 function App() {
   // State für die Suche und Filter
@@ -25,6 +32,10 @@ function App() {
   const [filteredCards, setFilteredCards] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  
+  // Auth State
+  const [user, setUser] = useState(null);
+  const [authChecked, setAuthChecked] = useState(false);
 
   // Karten aus der API laden
   useEffect(() => {
@@ -47,6 +58,22 @@ function App() {
     };
 
     fetchCards();
+  }, []);
+
+  // Effekt zum Überprüfen des Authentifizierungsstatus beim Start
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const currentUser = await authService.getCurrentUser();
+        setUser(currentUser);
+      } catch (error) {
+        console.error('Fehler beim Abrufen des Benutzerstatus:', error);
+      } finally {
+        setAuthChecked(true);
+      }
+    };
+
+    checkAuthStatus();
   }, []);
 
   // Effekt zum Filtern der Karten bei Änderungen an Suche oder Filtern
@@ -116,6 +143,11 @@ function App() {
       }));
     }
   };
+  
+  // Handler für erfolgreiche Anmeldung
+  const handleLoginSuccess = (loggedInUser) => {
+    setUser(loggedInUser);
+  };
 
   return (
     <Router>
@@ -138,9 +170,19 @@ function App() {
                 error={error}
               />
             } />
-            <Route path="/deck-builder" element={<DeckBuilderPage />} />
+            <Route path="/deck-builder" element={
+              <ProtectedRoute>
+                <DeckBuilderPage />
+              </ProtectedRoute>
+            } />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/admin" element={
+              <ProtectedRoute requireAdmin={true}>
+                <AdminPage />
+              </ProtectedRoute>
+            } />
+            <Route path="/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
+            <Route path="/register" element={<RegisterPage />} />
           </Routes>
         </main>
         <footer className="App-footer">

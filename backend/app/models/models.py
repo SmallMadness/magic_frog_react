@@ -1,6 +1,7 @@
-from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table, Text, Boolean, DateTime
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table, Text, Boolean, DateTime, Enum
 from sqlalchemy.orm import relationship
 from datetime import datetime
+import enum
 
 from app.db.database import Base
 
@@ -82,6 +83,30 @@ class DeckCard(Base):
     deck = relationship("Deck", back_populates="deck_cards")
 
 
+class UserRole(enum.Enum):
+    USER = "user"
+    ADMIN = "admin"
+
+
+class User(Base):
+    """
+    Modell für Benutzer
+    """
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    username = Column(String, unique=True, nullable=False, index=True)
+    email = Column(String, unique=True, nullable=False, index=True)
+    hashed_password = Column(String, nullable=False)
+    role = Column(Enum(UserRole), default=UserRole.USER)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    # Beziehungen
+    decks = relationship("Deck", back_populates="user", cascade="all, delete-orphan")
+
+
 class Deck(Base):
     """
     Modell für Magic-Decks
@@ -94,6 +119,8 @@ class Deck(Base):
     format = Column(String, default="Standard")
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    user_id = Column(Integer, ForeignKey("users.id"))
 
     # Beziehungen
     deck_cards = relationship("DeckCard", back_populates="deck", cascade="all, delete-orphan")
+    user = relationship("User", back_populates="decks")

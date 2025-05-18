@@ -27,7 +27,7 @@ def fetch_cards_by_set(set_code: str) -> List[Dict[str, Any]]:
     next_page = f"{SCRYFALL_API_BASE}/cards/search?q=set:{set_code}&unique=prints"
     
     while has_more:
-        print(f"Fetching cards from {next_page}")
+        # Karten von der API abrufen
         response = requests.get(next_page)
         
         # Rate Limiting beachten (max. 10 Anfragen pro Sekunde)

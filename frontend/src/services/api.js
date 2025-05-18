@@ -3,7 +3,7 @@
  */
 
 // API-Basis-URL
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+export const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 
 /**
  * Hilfsfunktion für API-Aufrufe
@@ -21,7 +21,7 @@ async function fetchApi(endpoint, options = {}) {
   };
   
   try {
-    console.log(`API-Anfrage an: ${endpoint}`);
+    // API-Anfrage ausführen
     const response = await fetch(url, {
       ...options,
       headers

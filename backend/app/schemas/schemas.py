@@ -1,6 +1,7 @@
-from typing import List, Optional, Dict
-from pydantic import BaseModel
+from typing import List, Optional, Dict, Union
+from pydantic import BaseModel, EmailStr, Field, validator
 from datetime import datetime
+from app.models.models import UserRole
 
 class ColorBase(BaseModel):
     code: str
@@ -104,3 +105,57 @@ class DeckWithCards(Deck):
             "card": card.card,
             "quantity": card.quantity
         } for card in self.deck_cards if card.is_sideboard]
+
+
+# Benutzer-Schemas
+class UserBase(BaseModel):
+    username: str
+    email: EmailStr
+
+
+class UserCreate(UserBase):
+    password: str = Field(..., min_length=8)
+    password_confirm: str
+    
+    @validator('password_confirm')
+    def passwords_match(cls, v, values):
+        if 'password' in values and v != values['password']:
+            raise ValueError('Passwörter stimmen nicht überein')
+        return v
+
+
+class UserUpdate(BaseModel):
+    username: Optional[str] = None
+    email: Optional[EmailStr] = None
+    is_active: Optional[bool] = None
+    role: Optional[UserRole] = None
+
+
+class UserLogin(BaseModel):
+    username: str
+    password: str
+
+
+class User(UserBase):
+    id: int
+    role: UserRole
+    is_active: bool
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        orm_mode = True
+
+
+class UserInDB(User):
+    hashed_password: str
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: Optional[str] = None
+    role: Optional[UserRole] = None

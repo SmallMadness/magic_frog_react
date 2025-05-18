@@ -2,6 +2,7 @@
 fastapi==0.103.1
 uvicorn==0.23.2
 pydantic==2.3.0
+pydantic[email]==2.3.0
 
 # Datenbank
 sqlalchemy==2.0.20
@@ -12,6 +13,11 @@ requests==2.31.0
 
 # Umgebungsvariablen
 python-dotenv==1.0.0
+
+# Authentifizierung
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
 
 # Testing
 pytest==7.4.0
